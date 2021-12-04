@@ -32,8 +32,6 @@ class ProductDetails extends PureComponent {
       gallery,
     } = this.props.details;
 
-   
-
     const currentProductSelectedAttributes = this.props.selectedAttributes.find(
       (item) => item.id === id
     );
@@ -42,7 +40,8 @@ class ProductDetails extends PureComponent {
       currentProductSelectedAttributes &&
       currentProductSelectedAttributes.attributes;
 
-   const selections = attributes &&
+    const selections =
+      attributes &&
       selected &&
       attributes.map((attribute, ix) => {
         return attribute.items.map((item) => {
@@ -51,18 +50,18 @@ class ProductDetails extends PureComponent {
             return item;
           }
 
-          item.selected = false
+          item.selected = false;
           return item;
         });
       });
 
-      const cartItem = (({ id, name, prices, attributes, gallery }) => ({
-        id,
-        name,
-        prices,
-        attributes ,
-        gallery,
-      }))(this.props.details);
+    const cartItem = (({ id, name, prices, attributes, gallery }) => ({
+      id,
+      name,
+      prices,
+      attributes,
+      gallery,
+    }))(this.props.details);
 
     return (
       <div className={styles.product__details}>
@@ -70,9 +69,7 @@ class ProductDetails extends PureComponent {
           {gallery &&
             gallery.map((item, ix) => (
               <img
-                style={{ cursor: "pointer" }}
                 src={item}
-                width="100px"
                 alt={name + " - " + (ix + 1)}
                 onClick={() => this.handleImages(ix)}
               />
@@ -82,16 +79,14 @@ class ProductDetails extends PureComponent {
         <div className={styles.main__image}>
           <img
             src={gallery && gallery[Number(this.state.mainImage)]}
-            width="200px"
             alt={name}
           />
         </div>
 
         <div className={styles.product__details__content}>
           <h1 className={styles.product__title}>{name}</h1>
-
+          <p>Status: {inStock ? "In Stock" : "Out of Stock"}</p>
           <h4 className={styles.product__brand}>{brand}</h4>
-
           <Attributes
             attributes={this.props.details.attributes}
             selectAttributes={currentProductSelectedAttributes}
@@ -100,14 +95,9 @@ class ProductDetails extends PureComponent {
 
           <div className={styles.product__price}>
             Price: <br />
-            <div
-              style={{
-                fontSize: "1.6rem",
-                display: "flex",
-              }}
-            >
+            <div className={styles.product__price__symbol}>
               {currencySymbol(this.props.currency)}
-              <span style={{ marginTop: "-.25rem" }}>
+              <span>
                 {prices && prices[currencyToAmount(this.props.currency)].amount}
               </span>
             </div>

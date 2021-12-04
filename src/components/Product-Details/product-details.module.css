@@ -11,15 +11,15 @@
   max-width: 7.9rem;
 }
 
-.side__images img {
+.side__images > img {
   width: 100%;
   max-width: 7.9rem;
   height: 8rem;
   object-fit: cover;
   object-position: 50% 20%;
   margin-bottom: 0.5rem;
-
-
+  width: 10rem;
+  cursor: pointer;
 }
 
 .main__image {
@@ -61,6 +61,14 @@
     text-transform: uppercase;
     font-weight: 700;
     margin-bottom: 2rem;
+}
+.product__price__symbol {
+  font-size: 1.6rem;
+  display: flex;
+}
+
+.product__price__symbol > span {
+margin-top: -.25rem;
 }
 
 .product__btn {
