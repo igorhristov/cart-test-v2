@@ -8,7 +8,7 @@ import {
   addQuantityToCartItem,
   removeQuantityFromCartItem,
 } from "../../../redux/cart/cart.actions";
-import Attributes from "../../Attributes";
+// import Attributes from "../../Attributes";
 
 import * as styles from "./cart-item.module.css";
 
@@ -38,27 +38,28 @@ class CartItem extends PureComponent {
 
   render() {
     const { id, name, prices, gallery, attributes, quantity } = this.props.item;
-    const currentProductSelectedAttributes = this.props.selectedAttributes.find(
-      (item) => item.id === id
-    );
 
-    const selected =
-      currentProductSelectedAttributes &&
-      currentProductSelectedAttributes.attributes;
+    // const currentProductSelectedAttributes = this.props.selectedAttributes.find(
+    //   (item) => item.id === id
+    // );
 
-    attributes &&
-      selected &&
-      attributes.map((attribute, ix) => {
-        return attribute.items.map((item) => {
-          if (item.id === selected[ix].items.id) {
-            item.selected = true;
-            return item;
-          }
+    // const selected =
+    //   currentProductSelectedAttributes &&
+    //   currentProductSelectedAttributes.attributes;
 
-          item.selected = false;
-          return item;
-        });
-      });
+    // attributes &&
+    //   selected &&
+    //   attributes.map((attribute, ix) => {
+    //     return attribute.items.map((item) => {
+    //       if (item.id === selected[ix].items.id) {
+    //         item.selected = true;
+    //         return item;
+    //       }
+
+    //       item.selected = false;
+    //       return item;
+    //     });
+    //   });
 
     return (
       <div className={styles.cart__item}>
@@ -77,13 +78,14 @@ class CartItem extends PureComponent {
             ).toFixed(2)}
           </span>
 
-          <Attributes
+          {/* <Attributes
             attributes={attributes}
             cartAttributes
             selectAttributes={currentProductSelectedAttributes}
             attributeDropdown={this.props.attributeDropdown}
             currentProductId={id}
-          />
+          /> */}
+          {JSON.stringify(attributes)}
         </div>
         <div className={styles.quantity}>
           <span

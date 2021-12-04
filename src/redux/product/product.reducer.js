@@ -1,12 +1,18 @@
 import ProductActionTypes from "./product.types";
 
 
-export const productListReducer = (state = { products: [] }, action) => {
+export const productListReducer = (state = { products: [], catProd: [] }, action) => {
   switch (action.type) {
     case ProductActionTypes.ALL_PRODUCTS_LIST:
       return {
         ...state,
         products: action.payload,
+      };
+
+      case ProductActionTypes.CATEGORY_PRODUCTS_LIST:
+      return {
+        ...state,
+        catProd: action.payload,
       };
 
     default:

@@ -9,6 +9,7 @@ const getAllProducts = async () => {
         "id",
         "name",
         "brand",
+        "category",
         "inStock",
         'gallery',
         "attributes {id, items {value, id}}",

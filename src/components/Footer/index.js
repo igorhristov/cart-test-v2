@@ -13,7 +13,7 @@ export default class Footer extends PureComponent {
         }}
       >
         Made by{" "}
-        <a target="_blank" href="https://igorhristov.me/">
+        <a target="_blank" href="https://igorhristov.me/" rel="noreferrer">
           Igor Hristov
         </a>{" "}
       </footer>

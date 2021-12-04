@@ -24,9 +24,17 @@ class Nav extends PureComponent {
     this.state = {
       categoryList: [],
     };
+
+    this.setWrapperRef = this.setWrapperRef.bind(this);
+    this.setWrapperRefCart = this.setWrapperRefCart.bind(this);
+    this.handleClickOutside = this.handleClickOutside.bind(this);
+    this.handleClickOutsideCart = this.handleClickOutsideCart.bind(this);
   }
 
   async componentDidMount() {
+    document.addEventListener("mousedown", this.handleClickOutside);
+    document.addEventListener("mousedown", this.handleClickOutsideCart);
+
     this.props.listCurrencies();
 
     const result = await JSON.parse(
@@ -36,6 +44,38 @@ class Nav extends PureComponent {
     this.setState({
       categoryList: result,
     });
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener("mousedown", this.handleClickOutside);
+    document.removeEventListener("mousedown", this.handleClickOutsideCart);
+  }
+
+  setWrapperRef(node) {
+    this.wrapperRef = node;
+  }
+  setWrapperRefCart(node) {
+    this.wrapperRefCart = node;
+  }
+
+  handleClickOutside(event) {
+    if (
+      this.wrapperRef &&
+      !this.wrapperRef.contains(event.target) &&
+      this.props.hiddenCurrencies === false
+    ) {
+      this.props.toggleCurrenciesHidden();
+    }
+  }
+
+  handleClickOutsideCart(event) {
+    if (
+      this.wrapperRefCart &&
+      !this.wrapperRefCart.contains(event.target) &&
+      this.props.hidden === false
+    ) {
+      this.props.toggleCartHidden();
+    }
   }
 
   render() {
@@ -64,6 +104,7 @@ class Nav extends PureComponent {
 
         <ul>
           <li
+            ref={this.setWrapperRef}
             style={{
               display: "flex",
               alignItems: "center",
@@ -72,14 +113,7 @@ class Nav extends PureComponent {
               fontWeight: "bold",
               position: "relative",
             }}
-            onClick={() => {
-              if (hidden === false) {
-                this.props.toggleCartHidden();
-                this.props.toggleCurrenciesHidden();
-              } else {
-                this.props.toggleCurrenciesHidden();
-              }
-            }}
+            onClick={() => this.props.toggleCurrenciesHidden()}
           >
             <span
               style={{ position: "absolute", right: "8px", fontWeight: "300" }}
@@ -94,13 +128,14 @@ class Nav extends PureComponent {
             >
               {hiddenCurrencies ? <>&#8249;</> : <>&#8250;</>}
             </span>
+            {hiddenCurrencies ? null : <Currencies currencies={currencies} />}
           </li>
-          <li>
+
+          <li ref={this.setWrapperRefCart}>
             <CartIcon />
+            {hidden ? null : <CartDropdown />}
           </li>
         </ul>
-        {hiddenCurrencies ? null : <Currencies currencies={currencies} />}
-        {hidden ? null : <CartDropdown />}
       </nav>
     );
   }

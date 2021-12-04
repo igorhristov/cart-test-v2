@@ -9,6 +9,7 @@ const getCategoryProducts = async (category) => {
       new Field("products", true).addFieldList([
         "id",
         "name",
+        'category',
         "brand",
         "inStock",
         "gallery",

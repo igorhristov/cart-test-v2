@@ -3,7 +3,7 @@ import React, { PureComponent } from "react";
 import { connect } from "react-redux";
 import { currencySymbol, currencyToAmount } from "../../helpers";
 import { addItemToCart } from "../../redux/cart/cart.actions";
-import Attributes from "../Attributes";
+// import Attributes from "../Attributes";
 
 import * as styles from "./product-details.module.css";
 
@@ -22,7 +22,6 @@ class ProductDetails extends PureComponent {
 
   render() {
     const {
-      id,
       name,
       description,
       brand,
@@ -32,28 +31,28 @@ class ProductDetails extends PureComponent {
       gallery,
     } = this.props.details;
 
-    const currentProductSelectedAttributes = this.props.selectedAttributes.find(
-      (item) => item.id === id
-    );
+    // const currentProductSelectedAttributes = this.props.selectedAttributes.find(
+    //   (item) => item.id === id
+    // );
 
-    const selected =
-      currentProductSelectedAttributes &&
-      currentProductSelectedAttributes.attributes;
+    // const selected =
+    //   currentProductSelectedAttributes &&
+    //   currentProductSelectedAttributes.attributes;
 
-    const selections =
-      attributes &&
-      selected &&
-      attributes.map((attribute, ix) => {
-        return attribute.items.map((item) => {
-          if (item.id === selected[ix].items.id) {
-            item.selected = true;
-            return item;
-          }
+    // const selections =
+    //   attributes &&
+    //   selected &&
+    //   attributes.map((attribute, ix) => {
+    //     return attribute.items.map((item) => {
+    //       if (item.id === selected[ix].items.id) {
+    //         item.selected = true;
+    //         return item;
+    //       }
 
-          item.selected = false;
-          return item;
-        });
-      });
+    //       item.selected = false;
+    //       return item;
+    //     });
+    //   });
 
     const cartItem = (({ id, name, prices, attributes, gallery }) => ({
       id,
@@ -69,6 +68,7 @@ class ProductDetails extends PureComponent {
           {gallery &&
             gallery.map((item, ix) => (
               <img
+                key={`${name}-${ix}`}
                 src={item}
                 alt={name + " - " + (ix + 1)}
                 onClick={() => this.handleImages(ix)}
@@ -87,11 +87,12 @@ class ProductDetails extends PureComponent {
           <h1 className={styles.product__title}>{name}</h1>
           <p>Status: {inStock ? "In Stock" : "Out of Stock"}</p>
           <h4 className={styles.product__brand}>{brand}</h4>
-          <Attributes
+          {/* <Attributes
             attributes={this.props.details.attributes}
             selectAttributes={currentProductSelectedAttributes}
             currentProductId={id}
-          />
+          /> */}
+          {JSON.stringify(attributes)}
 
           <div className={styles.product__price}>
             Price: <br />
@@ -122,7 +123,7 @@ class ProductDetails extends PureComponent {
 
 const mapStateToProps = (state) => ({
   currency: state.currencies.currency,
-  selectedAttributes: state.cart.selectedAttributes,
+  // selectedAttributes: state.cart.selectedAttributes,
 });
 
 const mapDispatchToProps = (dispatch) => ({
