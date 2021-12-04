@@ -20,7 +20,7 @@ class ProductsListItem extends PureComponent {
         {this.props.items.map((product) => (
           <div key={product.id} className={styles.product__wrapper}>
             <Link to={`/product/${product.id}`} className={styles.product}>
-              <div>
+              <div className={styles.product__img__wrapper}>
                 <img
                   className={styles.product__img}
                   src={product.gallery[0]}

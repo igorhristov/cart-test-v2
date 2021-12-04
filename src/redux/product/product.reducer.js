@@ -1,10 +1,7 @@
 import ProductActionTypes from "./product.types";
 
-const INITIAL_STATE = {
-  products: [],
-};
 
-const cartReducer = (state = INITIAL_STATE, action) => {
+export const productListReducer = (state = { products: [] }, action) => {
   switch (action.type) {
     case ProductActionTypes.ALL_PRODUCTS_LIST:
       return {
@@ -12,10 +9,20 @@ const cartReducer = (state = INITIAL_STATE, action) => {
         products: action.payload,
       };
 
- 
     default:
       return state;
   }
 };
 
-export default cartReducer;
+export const productDetailsReducer = (state = { product: {} }, action) => {
+  switch (action.type) {
+    case ProductActionTypes.PRODUCT_DETAILS:
+      return {
+        ...state,
+        product: action.payload,
+      };
+
+    default:
+      return state;
+  }
+};

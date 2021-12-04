@@ -2,44 +2,42 @@ import React, { PureComponent } from "react";
 import { connect } from "react-redux";
 
 import ProductDetails from "../../components/Product-Details";
-import getProduct from "../../queries/get-product";
 
 import { selectedAttributesList } from "./../../redux/cart/cart.actions";
+import { listProductDetails } from "./../../redux/product/product.actions";
 
 class ProductPage extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      product: "",
       productId: props.match.location.pathname.replace("/product/", ""),
     };
   }
 
   async componentDidMount() {
-    const result = await JSON.parse(
-      JSON.stringify((await getProduct(this.state.productId)).product)
-    );
-
-    this.setState({
-      product: result,
-    });
+    this.props.listProductDetails(this.state.productId);
 
     this.props.selectedAttributesList(
-      (({ id, attributes }) => ({ id, attributes }))(this.state.product)
+      (({ id, attributes }) => ({ id, attributes }))(this.props.productDetails)
     );
   }
 
   render() {
     return (
       <div>
-        <ProductDetails details={this.state.product} />;
+        <ProductDetails details={this.props.productDetails} />;
       </div>
     );
   }
 }
 
+const mapStateToProps = (state) =>({
+  productDetails: state.productDetails.product
+})
+
 const mapDispatchToProps = (dispatch) => ({
   selectedAttributesList: (data) => dispatch(selectedAttributesList(data)),
+  listProductDetails: (data) => dispatch(listProductDetails(data)),
 });
 
-export default connect(null, mapDispatchToProps)(ProductPage);
+export default connect(mapStateToProps, mapDispatchToProps)(ProductPage);
