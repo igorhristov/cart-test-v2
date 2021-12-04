@@ -37,7 +37,7 @@ class CartItem extends PureComponent {
   }
 
   render() {
-    const { id, name, prices, gallery, attributes, quantity } = this.props.item;
+    const { id, name, prices, gallery,  quantity } = this.props.item;
 
     // const currentProductSelectedAttributes = this.props.selectedAttributes.find(
     //   (item) => item.id === id
@@ -73,9 +73,7 @@ class CartItem extends PureComponent {
           <span className={styles.name}>{name}</span>
           <span className={styles.price}>
             {currencySymbol(this.props.currency)}{" "}
-            {(
-              prices[currencyToAmount(this.props.currency)].amount * quantity
-            ).toFixed(2)}
+            {prices[currencyToAmount(this.props.currency)].amount}
           </span>
 
           {/* <Attributes
@@ -85,7 +83,7 @@ class CartItem extends PureComponent {
             attributeDropdown={this.props.attributeDropdown}
             currentProductId={id}
           /> */}
-          {JSON.stringify(attributes)}
+          {/* {JSON.stringify(attributes)} */}
         </div>
         <div className={styles.quantity}>
           <span
@@ -105,19 +103,24 @@ class CartItem extends PureComponent {
           </span>
         </div>
         <div className={styles.img__wrapper}>
-          <span
-            className={styles.img__arrows}
-            onClick={() => this.handleLeftImages(gallery.length)}
-          >
-            &#60;
-          </span>
+          {gallery.length === 1 ? null : (
+            <span
+              className={styles.img__arrows}
+              onClick={() => this.handleLeftImages(gallery.length)}
+            >
+              &#60;
+            </span>
+          )}
+
           <img src={gallery[Number(this.state.mainImage)]} alt={name} />
-          <span
-            className={styles.img__arrows}
-            onClick={() => this.handleRightImages(gallery.length)}
-          >
-            &#62;
-          </span>
+          {gallery.length === 1 ? null : (
+            <span
+              className={styles.img__arrows}
+              onClick={() => this.handleRightImages(gallery.length)}
+            >
+              &#62;
+            </span>
+          )}
         </div>
       </div>
     );

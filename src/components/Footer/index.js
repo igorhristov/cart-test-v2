@@ -1,21 +1,15 @@
 import React, { PureComponent } from "react";
+import * as styles from "./footer.module.css";
 
 export default class Footer extends PureComponent {
   render() {
     return (
-      <footer
-        style={{
-          marginTop: "2rem",
-          textAlign: "center",
-          padding: "2rem 0",
-          background: "#222",
-          color: "#eaeaea",
-        }}
-      >
+      <footer className={styles.footer}>
         Made by{" "}
         <a target="_blank" href="https://igorhristov.me/" rel="noreferrer">
           Igor Hristov
         </a>{" "}
+        {new Date().getFullYear()}
       </footer>
     );
   }
