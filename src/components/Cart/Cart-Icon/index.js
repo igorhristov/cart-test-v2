@@ -12,14 +12,7 @@ class CartIcon extends PureComponent {
     return (
       <div
         className={styles.cart__icon}
-        onClick={() => {
-          if (this.props.currenciesHidden === false) {
-            this.props.toggleCurrenciesHidden();
-            this.props.toggleCartHidden();
-          } else {
-            this.props.toggleCartHidden();
-          }
-        }}
+        onClick={() =>  this.props.toggleCartHidden()}
       >
         <img src={ShoppingIcon} alt="shopping-icon" />
         <div

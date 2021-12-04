@@ -1,0 +1,11 @@
+.footer {
+    margin-top: 2rem;
+    text-align: center;
+    padding: 2rem 0;
+    background: #222;
+    color: #eaeaea;
+}
+
+.footer > a {
+    color: lightblue;
+}
