@@ -3,6 +3,7 @@ import React, { PureComponent } from "react";
 import { connect } from "react-redux";
 import { currencySymbol, currencyToAmount } from "../../helpers";
 import { addItemToCart } from "../../redux/cart/cart.actions";
+import parse from "html-react-parser";
 // import Attributes from "../Attributes";
 
 import * as styles from "./product-details.module.css";
@@ -21,15 +22,8 @@ class ProductDetails extends PureComponent {
   }
 
   render() {
-    const {
-      name,
-      description,
-      brand,
-      attributes,
-      prices,
-      inStock,
-      gallery,
-    } = this.props.details;
+    const { name, description, brand, attributes, prices, inStock, gallery } =
+      this.props.details;
 
     // const currentProductSelectedAttributes = this.props.selectedAttributes.find(
     //   (item) => item.id === id
@@ -111,10 +105,10 @@ class ProductDetails extends PureComponent {
             ADD TO CART
           </button>
 
-          <div
-            className={styles.product__description}
-            dangerouslySetInnerHTML={{ __html: description }}
-          />
+          <div className={styles.product__description}>
+            {" "}
+            {parse(`${description}`)}
+          </div>
         </div>
       </div>
     );
