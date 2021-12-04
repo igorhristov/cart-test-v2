@@ -23,7 +23,7 @@ const currencyReducer = (state = INITIAL_STATE, action) => {
     case CurrencyActionTypes.CURRENT_CURRENCY:
       return {
         ...state,
-        currency: action.currency
+        currency: action.currency,
       };
 
     default:

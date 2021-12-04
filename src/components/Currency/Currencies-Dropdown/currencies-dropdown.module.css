@@ -4,8 +4,9 @@
   flex-direction: column;
   position: absolute;
   top: 4.5rem;
-  /* left: 50%; */
-  right: 2%;
+  left: 50%;
+  /* left: 0%; */
+  transform: translateX(-50%);
   padding: 1.5rem;
   box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.2);
   z-index: 9999;
@@ -18,5 +19,14 @@
 }
 
 .currencies_container .currency:not(:last-child) {
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.2rem;
+}
+
+.currencies_container > span {
+  transition: transform 0.25s ease;
+  font-weight: 300;
+}
+
+.currencies_container > span:hover {
+  transform: scale(1.2);
 }
