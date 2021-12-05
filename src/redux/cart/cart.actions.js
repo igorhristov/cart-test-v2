@@ -23,13 +23,3 @@ export const removeQuantityFromCartItem = (item) => ({
   type: CartActionTypes.CART_ITEM_REMOVE_QUANTITY,
   payload: item,
 });
-
-export const selectedAttributesList = (item) => ({
-  type: CartActionTypes.SELECTED_ATTRIBUTES_LIST,
-  payload: item,
-});
-
-export const selectAttribute = (item) => ({
-  type: CartActionTypes.SELECT_ATTRIBUTE,
-  payload: item,
-});

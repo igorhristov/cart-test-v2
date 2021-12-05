@@ -1,6 +1,6 @@
 import AttributesActionTypes from "./attributes.types";
 
-import { initAttributes } from "./attributes.utils";
+import { initAttributes, changeAttributeItem } from "./attributes.utils";
 
 export const attributesListReducer = (
   state = { attributesList: [] },
@@ -11,6 +11,15 @@ export const attributesListReducer = (
       return {
         ...state,
         attributesList: initAttributes(state.attributesList, action.payload),
+      };
+
+    case AttributesActionTypes.CHANGE_ATTRIBUTE_ITEM:
+      return {
+        ...state,
+        attributesList: changeAttributeItem(
+          state.attributesList,
+          action.payload
+        ),
       };
 
     default:

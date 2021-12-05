@@ -8,7 +8,6 @@ import {
   addQuantityToCartItem,
   removeQuantityFromCartItem,
 } from "../../../redux/cart/cart.actions";
-// import Attributes from "../../Attributes";
 
 import * as styles from "./cart-item.module.css";
 
@@ -39,28 +38,6 @@ class CartItem extends PureComponent {
   render() {
     const { id, name, prices, gallery,  quantity } = this.props.item;
 
-    // const currentProductSelectedAttributes = this.props.selectedAttributes.find(
-    //   (item) => item.id === id
-    // );
-
-    // const selected =
-    //   currentProductSelectedAttributes &&
-    //   currentProductSelectedAttributes.attributes;
-
-    // attributes &&
-    //   selected &&
-    //   attributes.map((attribute, ix) => {
-    //     return attribute.items.map((item) => {
-    //       if (item.id === selected[ix].items.id) {
-    //         item.selected = true;
-    //         return item;
-    //       }
-
-    //       item.selected = false;
-    //       return item;
-    //     });
-    //   });
-
     return (
       <div className={styles.cart__item}>
         <button
@@ -76,14 +53,6 @@ class CartItem extends PureComponent {
             {prices[currencyToAmount(this.props.currency)].amount}
           </span>
 
-          {/* <Attributes
-            attributes={attributes}
-            cartAttributes
-            selectAttributes={currentProductSelectedAttributes}
-            attributeDropdown={this.props.attributeDropdown}
-            currentProductId={id}
-          /> */}
-          {/* {JSON.stringify(attributes)} */}
         </div>
         <div className={styles.quantity}>
           <span
@@ -129,7 +98,6 @@ class CartItem extends PureComponent {
 
 const mapStateToProps = (state) => ({
   currency: state.currencies.currency,
-  selectedAttributes: state.cart.selectedAttributes,
 });
 
 const mapDispatchToProps = (dispatch) => ({
