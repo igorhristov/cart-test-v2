@@ -9,6 +9,8 @@ import {
   removeQuantityFromCartItem,
 } from "../../../redux/cart/cart.actions";
 
+import { changeAttributeItem } from "../../../redux/attributes/attributes.actions";
+
 import * as styles from "./cart-item.module.css";
 
 class CartItem extends PureComponent {
@@ -36,7 +38,11 @@ class CartItem extends PureComponent {
   }
 
   render() {
-    const { id, name, prices, gallery,  quantity } = this.props.item;
+    const { id, name, prices, gallery, attributes, quantity } = this.props.item;
+
+    const selectedAttributes = this.props.selectedAttributes.find(
+      (product) => product.id === id
+    );
 
     return (
       <div className={styles.cart__item}>
@@ -52,7 +58,65 @@ class CartItem extends PureComponent {
             {currencySymbol(this.props.currency)}{" "}
             {prices[currencyToAmount(this.props.currency)].amount}
           </span>
+          {/* {JSON.stringify(attributes)} */}
 
+          {attributes &&
+            attributes.map((attribute, ix) => (
+              <div className={styles.product__attributes} key={attribute.id}>
+                {attribute.id === "Capacity" ||
+                attribute.id === "Size" ||
+                attribute.id === "Color" ? (
+                  ""
+                ) : (
+                  <p
+                    className={styles.attribute__title}
+                  >
+                    {attribute.id}:
+                  </p>
+                )}
+
+                <div className={styles.attribute__items}>
+                  {attribute.items.map((item) => (
+                    <div
+                      key={item.id}
+                      className={`${styles.attribute__item} ${
+                        selectedAttributes &&
+                        selectedAttributes.attributes[ix].selected === item.id
+                          ? styles.selected
+                          : ""
+                      } ${
+                        attribute.id !== "Capacity"                         
+                          ? styles.attribute__item__color
+                          : ""
+                      }`}
+                      style={{
+                        background: `${
+                          attribute.id === "Color" ? item.value : ""
+                        }`,
+                        opacity: `${
+                          attribute.id === "Color"
+                            ? selectedAttributes &&
+                              selectedAttributes.attributes[ix].selected ===
+                                item.id
+                              ? "1"
+                              : "0.2"
+                            : ""
+                        }`,
+                      }}
+                      onClick={() =>
+                        this.props.changeAttributeItem({
+                          productId: this.props.item.id,
+                          attributeId: attribute.id,
+                          itemId: item.id,
+                        })
+                      }
+                    >
+                      {item.value.includes("#") ? "" : item.value}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
         </div>
         <div className={styles.quantity}>
           <span
@@ -98,6 +162,7 @@ class CartItem extends PureComponent {
 
 const mapStateToProps = (state) => ({
   currency: state.currencies.currency,
+  selectedAttributes: state.attributesList.attributesList,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -105,6 +170,7 @@ const mapDispatchToProps = (dispatch) => ({
   addQuantityToCartItem: (item) => dispatch(addQuantityToCartItem(item)),
   removeQuantityFromCartItem: (item) =>
     dispatch(removeQuantityFromCartItem(item)),
+  changeAttributeItem: (item) => dispatch(changeAttributeItem(item)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(CartItem);
