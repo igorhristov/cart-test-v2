@@ -68,39 +68,34 @@ class CartItem extends PureComponent {
                 attribute.id === "Color" ? (
                   ""
                 ) : (
-                  <p
-                    className={styles.attribute__title}
-                  >
-                    {attribute.id}:
-                  </p>
+                  <p className={styles.attribute__title}>{attribute.id}:</p>
                 )}
 
                 <div className={styles.attribute__items}>
                   {attribute.items.map((item) => (
                     <div
                       key={item.id}
-                      className={`${styles.attribute__item} ${
+                      className={`${
+                        attribute.id === "Color"
+                          ? selectedAttributes &&
+                            selectedAttributes.attributes[ix].selected !==
+                              item.id
+                            ? styles.item__color__opacity
+                            : ""
+                          : ""
+                      }  ${styles.attribute__item} ${
                         selectedAttributes &&
                         selectedAttributes.attributes[ix].selected === item.id
                           ? styles.selected
                           : ""
                       } ${
-                        attribute.id !== "Capacity"                         
+                        attribute.id !== "Capacity"
                           ? styles.attribute__item__color
                           : ""
-                      }`}
+                      } `}
                       style={{
                         background: `${
                           attribute.id === "Color" ? item.value : ""
-                        }`,
-                        opacity: `${
-                          attribute.id === "Color"
-                            ? selectedAttributes &&
-                              selectedAttributes.attributes[ix].selected ===
-                                item.id
-                              ? "1"
-                              : "0.2"
-                            : ""
                         }`,
                       }}
                       onClick={() =>

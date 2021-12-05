@@ -49,30 +49,32 @@ class ProductDetails extends PureComponent {
 
     return (
       <div className={styles.product__details}>
-        <div className={styles.side__images}>
-          {gallery &&
-            gallery.map((item, ix) => (
-              <img
-                key={`${name}-${ix}`}
-                src={item}
-                alt={name + " - " + (ix + 1)}
-                onClick={() => this.handleImages(ix)}
-              />
-            ))}
-        </div>
+        <div className={styles.images__wrapper}>
+          <div className={styles.side__images}>
+            {gallery &&
+              gallery.map((item, ix) => (
+                <img
+                  key={`${name}-${ix}`}
+                  src={item}
+                  alt={name + " - " + (ix + 1)}
+                  onClick={() => this.handleImages(ix)}
+                />
+              ))}
+          </div>
 
-        <div className={styles.main__image}>
-          <img
-            src={gallery && gallery[Number(this.state.mainImage)]}
-            alt={name}
-          />
+          <div className={styles.main__image}>
+            <img
+              src={gallery && gallery[Number(this.state.mainImage)]}
+              alt={name}
+            />
+          </div>
         </div>
 
         <div className={styles.product__details__content}>
           <h1 className={styles.product__title}>{name}</h1>
           <p>Status: {inStock ? "In Stock" : "Out of Stock"}</p>
           <h4 className={styles.product__brand}>{brand}</h4>
-          
+
           {attributes &&
             attributes.map((attribute, ix) => (
               <div className={styles.product__attributes} key={attribute.id}>
@@ -81,7 +83,15 @@ class ProductDetails extends PureComponent {
                   {attribute.items.map((item) => (
                     <div
                       key={item.id}
-                      className={`${styles.attribute__item} ${
+                      className={`${
+                        attribute.id === "Color"
+                          ? selectedAttributes &&
+                            selectedAttributes.attributes[ix].selected !==
+                              item.id
+                            ? styles.item__color__opacity
+                            : ""
+                          : ""
+                      }  ${styles.attribute__item} ${
                         selectedAttributes &&
                         selectedAttributes.attributes[ix].selected === item.id
                           ? styles.selected
@@ -90,15 +100,6 @@ class ProductDetails extends PureComponent {
                       style={{
                         background: `${
                           attribute.id === "Color" ? item.value : ""
-                        }`,
-                        opacity: `${
-                          attribute.id === "Color"
-                            ? selectedAttributes &&
-                              selectedAttributes.attributes[ix].selected ===
-                                item.id
-                              ? "1"
-                              : "0.2"
-                            : ""
                         }`,
                       }}
                       onClick={() =>
