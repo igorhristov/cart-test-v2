@@ -3,8 +3,8 @@ import { connect } from "react-redux";
 
 import ProductDetails from "../../components/Product-Details";
 
-// import { selectedAttributesList } from "./../../redux/cart/cart.actions";
 import { listProductDetails } from "./../../redux/product/product.actions";
+import { listSelectedAttributes } from "../../redux/attributes/attributes.actions";
 
 class ProductPage extends PureComponent {
   constructor(props) {
@@ -16,10 +16,13 @@ class ProductPage extends PureComponent {
 
   async componentDidMount() {
     this.props.listProductDetails(this.state.productId);
+  }
 
-    // this.props.selectedAttributesList(
-    //   (({ id, attributes }) => ({ id, attributes }))(this.props.productDetails)
-    // );
+  componentDidUpdate() {
+    this.props.listSelectedAttributes({
+      id: this.props.productDetails.id,
+      attributes: this.props.productDetails.attributes,
+    });
   }
 
   render() {
@@ -36,8 +39,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  // selectedAttributesList: (data) => dispatch(selectedAttributesList(data)),
   listProductDetails: (data) => dispatch(listProductDetails(data)),
+  listSelectedAttributes: (item) => dispatch(listSelectedAttributes(item)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProductPage);

@@ -2,9 +2,10 @@ import React, { PureComponent } from "react";
 
 import { connect } from "react-redux";
 import { currencySymbol, currencyToAmount } from "../../helpers";
+
 import { addItemToCart } from "../../redux/cart/cart.actions";
+
 import parse from "html-react-parser";
-// import Attributes from "../Attributes";
 
 import * as styles from "./product-details.module.css";
 
@@ -22,31 +23,16 @@ class ProductDetails extends PureComponent {
   }
 
   render() {
-    const { name, description, brand, attributes, prices, inStock, gallery } =
-      this.props.details;
-
-    // const currentProductSelectedAttributes = this.props.selectedAttributes.find(
-    //   (item) => item.id === id
-    // );
-
-    // const selected =
-    //   currentProductSelectedAttributes &&
-    //   currentProductSelectedAttributes.attributes;
-
-    // const selections =
-    //   attributes &&
-    //   selected &&
-    //   attributes.map((attribute, ix) => {
-    //     return attribute.items.map((item) => {
-    //       if (item.id === selected[ix].items.id) {
-    //         item.selected = true;
-    //         return item;
-    //       }
-
-    //       item.selected = false;
-    //       return item;
-    //     });
-    //   });
+    const {
+      id,
+      name,
+      description,
+      brand,
+      attributes,
+      prices,
+      inStock,
+      gallery,
+    } = this.props.details;
 
     const cartItem = (({ id, name, prices, attributes, gallery }) => ({
       id,
@@ -55,6 +41,10 @@ class ProductDetails extends PureComponent {
       attributes,
       gallery,
     }))(this.props.details);
+
+    const selectedAttributes = this.props.selectedAttributes.find(
+      (product) => product.id === id
+    );
 
     return (
       <div className={styles.product__details}>
@@ -81,12 +71,42 @@ class ProductDetails extends PureComponent {
           <h1 className={styles.product__title}>{name}</h1>
           <p>Status: {inStock ? "In Stock" : "Out of Stock"}</p>
           <h4 className={styles.product__brand}>{brand}</h4>
-          {/* <Attributes
-            attributes={this.props.details.attributes}
-            selectAttributes={currentProductSelectedAttributes}
-            currentProductId={id}
-          /> */}
-          {JSON.stringify(attributes)}
+          {/* {JSON.stringify(selectedAttributes)} */}
+          {attributes &&
+            attributes.map((attribute, ix) => (
+              <div className={styles.product__attributes} key={attribute.id}>
+                <h3>{attribute.id}:</h3>
+                <div className={styles.attribute__items}>
+                  {attribute.items.map((item) => (
+                    <div
+                      key={item.id}
+                      className={`${styles.attribute__item} ${
+                        selectedAttributes &&
+                        selectedAttributes.attributes[ix].selected === item.id
+                          ? styles.selected
+                          : ""
+                      }`}
+                      style={{
+                        background: `${
+                          attribute.id === "Color" ? item.value : ""
+                        }`,
+                        opacity: `${
+                          attribute.id === "Color"
+                            ? selectedAttributes &&
+                              selectedAttributes.attributes[ix].selected ===
+                                item.id
+                              ? "1"
+                              : "0.2"
+                            : ""
+                        }`,
+                      }}
+                    >
+                      {item.value.includes("#") ? "" : item.value}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
 
           <div className={styles.product__price}>
             Price: <br />
@@ -117,7 +137,7 @@ class ProductDetails extends PureComponent {
 
 const mapStateToProps = (state) => ({
   currency: state.currencies.currency,
-  // selectedAttributes: state.cart.selectedAttributes,
+  selectedAttributes: state.attributesList.attributesList,
 });
 
 const mapDispatchToProps = (dispatch) => ({
