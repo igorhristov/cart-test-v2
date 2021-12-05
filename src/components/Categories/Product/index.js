@@ -2,10 +2,7 @@ import React, { PureComponent } from "react";
 import { Link } from "react-router-dom";
 
 import { connect } from "react-redux";
-import {
-  addItemToCart,
-  selectedAttributesList,
-} from "../../../redux/cart/cart.actions";
+import { addItemToCart } from "../../../redux/cart/cart.actions";
 
 import WhiteShoppingIcon from "../../../images/white-empty-cart.png";
 
@@ -48,9 +45,6 @@ class ProductsListItem extends PureComponent {
                 className={styles.product_add_to_cart}
                 onClick={() => {
                   this.props.addItemToCart(product);
-                  this.props.selectedAttributesList(
-                    (({ id, attributes }) => ({ id, attributes }))(product)
-                  );
                 }}
               >
                 <img src={WhiteShoppingIcon} alt="shopping icon" />
@@ -69,7 +63,6 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   addItemToCart: (item) => dispatch(addItemToCart(item)),
-  selectedAttributesList: (data) => dispatch(selectedAttributesList(data)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProductsListItem);

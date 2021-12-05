@@ -5,14 +5,11 @@ import {
   removeItemFromCart,
   addQuantityToCartItem,
   removeQuantityFromCartItem,
-  selectedAttributesListing,
-  selectAttributeUtil,
 } from "./cart.utils";
 
 const INITIAL_STATE = {
   hidden: true,
   cartItems: [],
-  selectedAttributes: [],
 };
 
 const cartReducer = (state = INITIAL_STATE, action) => {
@@ -45,24 +42,6 @@ const cartReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         cartItems: removeQuantityFromCartItem(state.cartItems, action.payload),
-      };
-
-    case CartActionTypes.SELECTED_ATTRIBUTES_LIST:
-      return {
-        ...state,
-        selectedAttributes: selectedAttributesListing(
-          state.selectedAttributes,
-          action.payload
-        ),
-      };
-
-    case CartActionTypes.SELECT_ATTRIBUTE:
-      return {
-        ...state,
-        selectedAttributes: selectAttributeUtil(
-          state.selectedAttributes,
-          action.payload
-        ),
       };
 
     default:

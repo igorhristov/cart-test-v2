@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { currencySymbol, currencyToAmount } from "../../helpers";
 
 import { addItemToCart } from "../../redux/cart/cart.actions";
+import { changeAttributeItem } from "../../redux/attributes/attributes.actions";
 
 import parse from "html-react-parser";
 
@@ -71,7 +72,7 @@ class ProductDetails extends PureComponent {
           <h1 className={styles.product__title}>{name}</h1>
           <p>Status: {inStock ? "In Stock" : "Out of Stock"}</p>
           <h4 className={styles.product__brand}>{brand}</h4>
-          {/* {JSON.stringify(selectedAttributes)} */}
+          
           {attributes &&
             attributes.map((attribute, ix) => (
               <div className={styles.product__attributes} key={attribute.id}>
@@ -100,6 +101,13 @@ class ProductDetails extends PureComponent {
                             : ""
                         }`,
                       }}
+                      onClick={() =>
+                        this.props.changeAttributeItem({
+                          productId: this.props.details.id,
+                          attributeId: attribute.id,
+                          itemId: item.id,
+                        })
+                      }
                     >
                       {item.value.includes("#") ? "" : item.value}
                     </div>
@@ -142,6 +150,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   addItemToCart: (item) => dispatch(addItemToCart(item)),
+  changeAttributeItem: (item) => dispatch(changeAttributeItem(item)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProductDetails);
