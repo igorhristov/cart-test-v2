@@ -1,7 +1,3 @@
 .home {
-    background: rgb(243, 248, 194);
-    min-height: 30vh;
-    display: flex;
-    align-items: center;
-   justify-content: center;
+   text-align: center;
 }

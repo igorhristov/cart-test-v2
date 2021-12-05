@@ -81,6 +81,11 @@
   width: 2.4rem;
 }
 
+.item__color__opacity {
+  opacity: 0.3;
+}
+
+
 
 .quantity {
   width: 2.4rem;
